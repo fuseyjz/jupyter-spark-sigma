@@ -1,0 +1,8 @@
+logsources:
+  osquery:
+    product: osquery
+    service: osquery
+    conditions:
+      sourcetype: osquery
+fieldmappings:
+    NothingToMap: NothingToMap

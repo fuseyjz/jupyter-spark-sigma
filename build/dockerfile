@@ -1,0 +1,38 @@
+FROM jupyter/pyspark-notebook:82d1d0bf0867
+# I'm using Spark 2.4.3
+
+USER root
+
+RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar --no-check-certificate && \
+    wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar --no-check-certificate && \
+    wget https://repo1.maven.org/maven2/org/apache/spark/spark-streaming-kafka-0-8-assembly_2.11/2.3.1/spark-streaming-kafka-0-8-assembly_2.11-2.3.1.jar --no-check-certificate && \
+    mv *.jar /usr/local/spark/jars
+
+RUN apt-get update && \
+    apt-get install -y -qq \
+        zip && \
+    python3 -m pip install papermill \
+    schedule \
+    arrow \
+    boto3 && \
+    jupyter lab build
+
+# Assuming that Python 3 is installed at /usr/bin/python3.
+#
+ENV PYSPARK_PYTHON /usr/bin/python3
+#
+# Make link to same location in container.
+#
+RUN ln -s /opt/conda/bin/python3 /usr/bin/python3
+
+USER $NB_UID
+
+WORKDIR /home/jovyan
+
+RUN git clone https://github.com/Neo23x0/sigma.git && \
+    mkdir /home/jovyan/sigma/config && \
+    mkdir /home/jovyan/sigma/rules/output && \
+    mkdir /home/jovyan/sigma/rules/osquery
+
+COPY ./build/osquery.yml /home/jovyan/sigma/config/osquery.yml
+COPY ./api ./api
