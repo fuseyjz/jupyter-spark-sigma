@@ -2,4 +2,4 @@
 
 Build Alerting Pipeline with Jupyter, Spark and SIGMA
 
-Link: https://medium.com/@jaydenzheng/build-alerting-pipeline-with-jupyter-spark-and-sigma-6d8da221e0c1?sk=d642381e68ee41a321df94164eaa2437
+Link: https://medium.com/@jaydenzheng/build-alerting-pipeline-with-jupyter-spark-and-sigma-11083caa739b?sk=54c6dd00c5a16fa014e71ea7882ed534
